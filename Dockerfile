@@ -15,6 +15,7 @@ ARG SEATA_VERSION=0.5.1
 WORKDIR /$BASE_DIR
 
 RUN set -x \
+    && yum clean all \
     && yum update -y \
     && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl git \
     && wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz \
@@ -24,7 +25,7 @@ RUN set -x \
     && git checkout v0.5.1 \
     && /$BASE_DIR/apache-maven-3.6.2/bin/mvn clean package -Dmaven.test.skip=true\
     && mkdir /opt/seata \
-    && cp -R /$BASE_DIR/seata/distribution/ /opt/seata/ \
+    && cp -R /$BASE_DIR/seata/distribution/* /opt/seata/ \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
     && yum clean all
 

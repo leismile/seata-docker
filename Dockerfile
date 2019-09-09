@@ -16,11 +16,13 @@ WORKDIR /$BASE_DIR
 
 RUN set -x \
     && yum update -y \
-    && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl \
-    && wget  https://github.com/seata/seata/releases/download/v${SEATA_VERSION}/seata-server-${SEATA_VERSION}.tar.gz -P /home \
+    && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl git maven\
+    && git clone https://github.com/seata/seata.git \
+    && cd /$BASE_DIR/seata \
+    && git checkout v0.5.1 \
+    && mvn clean package \
     && mkdir /opt/seata \
-    && tar -xzvf /home/seata-server-${SEATA_VERSION}.tar.gz -C /opt/seata \
-    && rm -rf /home/seata-server-${SEATA_VERSION}.tar.gz \
+    && cp -R /$BASE_DIR/seata/distribution/ /opt/seata/ \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
     && yum clean all
 

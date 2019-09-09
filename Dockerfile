@@ -20,7 +20,7 @@ RUN set -x \
     && git clone https://github.com/seata/seata.git \
     && cd /$BASE_DIR/seata \
     && git checkout v0.5.1 \
-    && mvn clean package \
+    && mvn clean package -Dmaven.test.skip=true\
     && mkdir /opt/seata \
     && cp -R /$BASE_DIR/seata/distribution/ /opt/seata/ \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \

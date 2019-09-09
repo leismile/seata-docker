@@ -1,13 +1,11 @@
-# https://hub.docker.com/_/openjdk
-FROM centos:7.5.1804
+# https://hub.docker.com/_/maven
+FROM maven:3.5.4-jdk-8
 
 # set label
-LABEL maintainer="seata <niao.shuai123@163.com>"
+LABEL maintainer="seata <29130962@qq.com>"
 
 # set environment
 ENV SEATA_USER="seata" \
-    JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk" \
-    JAVA="/usr/lib/jvm/java-1.8.0-openjdk/bin/java" \
     TIME_ZONE="Asia/Shanghai" 
 
 ARG SEATA_VERSION=0.5.1
@@ -16,7 +14,7 @@ WORKDIR /$BASE_DIR
 
 RUN set -x \
     && yum update -y \
-    && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl git maven\
+    && yum install -y wget iputils nc vim libcurl git \
     && git clone https://github.com/seata/seata.git \
     && cd /$BASE_DIR/seata \
     && git checkout v0.5.1 \
